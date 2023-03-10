@@ -1,0 +1,34 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Input data
+years = np.array([2017, 2018, 2019, 2020, 2021, 2022])
+population = np.array([23300, 28355, 40483, 42345, 47567, 55663])
+
+# Reshape data
+X = years.reshape((-1, 1))
+y = population.reshape((-1, 1))
+
+# Create regression model
+n = len(X)
+x_mean = X.mean()
+y_mean = y.mean()
+xy_mean = (X * y).mean()
+x_squared_mean = (X ** 2).mean()
+
+slope = (xy_mean - x_mean * y_mean) / (x_squared_mean - x_mean ** 2)
+intercept = y_mean - slope * x_mean
+
+# Predict 2023 population
+y_pred = slope * 2023 + intercept
+
+# Plot data and regression line
+plt.scatter(X, y)
+plt.plot(X, slope * X + intercept, color='red')
+plt.scatter(2023, y_pred, color='green')
+plt.xlabel('Year')
+plt.ylabel('Population')
+plt.title('Population Growth')
+plt.show()
+
+print("Predicted population in 2023:", y_pred[0])
