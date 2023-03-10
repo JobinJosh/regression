@@ -1,0 +1,47 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# population data for 10 cities from 2017-2022
+city1 = np.array([23300, 28355, 40483, 42345, 47567, 55663])
+city2 = np.array([17800, 21106, 42156, 32456, 33775, 39885])
+city3 = np.array([31344, 40464, 55776, 61567, 77785, 80365])
+city4 = np.array([10224, 12647, 16975, 21954, 26574, 29773])
+city5 = np.array([7687, 14464, 45565, 50348, 63556, 78857])
+city6 = np.array([21779, 25466, 29454, 30453, 35358, 39467])
+city7 = np.array([25354, 33558, 41666, 60577, 91353, 100567])
+city8 = np.array([45567, 70397, 90363, 100739, 120167, 140677])
+city9 = np.array([30678, 37585, 44397, 51694, 55155, 58687])
+city10 = np.array([27789, 33298, 41392, 45358, 40566, 43378])
+
+# combine all city data into one array
+data = np.array([city1, city2, city3, city4, city5, city6, city7, city8, city9, city10])
+
+# create array for year values (2017-2022)
+years = np.array([2017, 2018, 2019, 2020, 2021, 2022])
+
+# calculate the slope and y-intercept of each city's linear regression line
+slopes = []
+intercepts = []
+for city in data:
+    slope, intercept = np.polyfit(years, city, 1)
+    slopes.append(slope)
+    intercepts.append(intercept)
+
+# predict population for each city in 2023
+populations_2023 = []
+for i in range(len(data)):
+    prediction = slopes[i] * 2023 + intercepts[i]
+    populations_2023.append(prediction)
+    print(f"City {i+1} population in 2023: {prediction:.0f}")
+
+# plot the data and linear regression lines for each city
+plt.figure(figsize=(10, 6))
+for i in range(len(data)):
+    plt.plot(years, data[i], label=f"City {i+1}")
+    plt.plot(2023, populations_2023[i], 'o', markersize=10)
+    plt.plot([2022, 2023], [slopes[i]*2022+intercepts[i], prediction], '--')
+plt.xlabel("Year")
+plt.ylabel("Population")
+plt.title("Population Data and Linear Regression for 10 Cities")
+plt.legend()
+plt.show()
