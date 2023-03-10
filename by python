@@ -1,0 +1,18 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Data
+year = np.array([2017, 2018, 2019, 2020, 2021, 2022])
+pop = np.array([23300, 28355, 40483, 42345, 47567, 55663])
+
+# Linear Regression
+slope, intercept = np.polyfit(year, pop, 1)
+regress = slope * year + intercept
+
+# Plotting
+plt.scatter(year, pop, label='Population')
+plt.plot(year, regress, 'r', label='Linear Regression')
+plt.xlabel('Year')
+plt.ylabel('Population')
+plt.legend()
+plt.show()
